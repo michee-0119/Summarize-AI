@@ -2,7 +2,7 @@
 
 export const CreateUser = () => {
   const handleClick = async () => {
-    const user = await fetch("http://localhost:3000/api/user", {
+    const user = await fetch("http://localhost:3000/api", {
       method: "POST",
       body: JSON.stringify({
         email: "test@test.com",
