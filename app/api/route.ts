@@ -7,6 +7,7 @@ export async function POST(req: Request) {
       data: {
         email: "test1@test.com",
         id: "2",
+        clerkId: "",
       },
     });
     console.log(user);
