@@ -9,7 +9,7 @@ type Event = {
     first_name: string;
     last_name: string;
     email_addresses: { email_address: string }[];
-  };
+  }; 
 };
 
 export async function POST(req: NextRequest) {
@@ -18,14 +18,12 @@ export async function POST(req: NextRequest) {
   if (!webhookSecret) {
     return NextResponse.json(
       { error: "Missing webhook secret" },
-      { status: 400 },
+      { status: 500 },
     );
   }
 
   const svixId = req.headers.get("svix-id");
-
   const svixTimestamp = req.headers.get("svix-timestamp");
-
   const svixSgnature = req.headers.get("svix-signature");
 
   if (!svixId || !svixTimestamp || !svixSgnature) {
@@ -58,6 +56,6 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 500 });
+    return NextResponse.json({ error: `Invalid signature ${error}` }, { status: 500 });
   }
 }
