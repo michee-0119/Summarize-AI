@@ -17,7 +17,7 @@ model User {
   updatedAt  DateTime  @updatedAt
   articles   Article[]
 }
-
+ 
 model Article {
   id        String   @id @unique @default(cuid())
   title     String
