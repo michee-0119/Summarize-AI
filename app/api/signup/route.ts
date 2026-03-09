@@ -9,7 +9,7 @@ type Event = {
     first_name: string;
     last_name: string;
     email_addresses: { email_address: string }[];
-  }; 
+  };
 };
 
 export async function POST(req: NextRequest) {
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   if (!webhookSecret) {
     return NextResponse.json(
       { error: "Missing webhook secret" },
-      { status: 500 },
+      { status: 400 },
     );
   }
 
@@ -56,6 +56,9 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: `Invalid signature ${error}` }, { status: 500 });
+    return NextResponse.json(
+      { error: `Invalid signature ${error}` },
+      { status: 500 },
+    );
   }
 }
