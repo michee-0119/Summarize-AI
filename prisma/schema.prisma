@@ -8,11 +8,35 @@ datasource db {
 }
 
 model User {
-  id         String   @id @unique @default(uuid())
-  clerkId    String   @unique
-  isVerified Boolean  @default(false)
-  email      String   @unique
+  userId     String    @id @unique @default(uuid())
+  clerkId    String    @unique
+  isVerified Boolean   @default(false)
+  email      String    @unique
   name       String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  articles   Article[]
+}
+
+model Article {
+  id        String   @id @unique @default(cuid())
+  title     String
+  content   String
+  summary   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [userId])
+  createdAt DateTime @default(now())
+  UpdatedAt DateTime @updatedAt
+  quizzes   Quiz[]
+}
+
+model Quiz {
+  id        String   @id @default(cuid())
+  question  String
+  options   String
+  answer    String
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
